@@ -79,6 +79,7 @@ int main ( void )
     
     // Update CHnSETn = 1,2,3,4
     uint8_t chnset[6] = { 0x45, 0x03, 0x05, 0x05, 0x05, 0x05 };
+//    uint8_t chnset[6] = { 0x45, 0x03, 0x00, 0x81, 0x81, 0x81 };
     SPI1_Write(chnset, 6);
     CORETIMER_DelayMs(10000);
     
@@ -112,7 +113,8 @@ int main ( void )
     uint32_t rdata = 0x12;
     
 //    uint32_t data[11];
-    uint32_t data[24];
+//    uint32_t data[24];
+    uint32_t data[35];
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
@@ -126,10 +128,15 @@ int main ( void )
 //        UART1_Write(&data, 11);
 //        CORETIMER_DelayUs(205);
         
-        SPI1_WriteRead(&rdata, 1, &data, 24);
-        CORETIMER_DelayUs(410);
-        UART1_Write(&data, 24);
-        CORETIMER_DelayUs(410);
+//        SPI1_WriteRead(&rdata, 1, &data, 24);
+//        CORETIMER_DelayUs(410);
+//        UART1_Write(&data, 24);
+//        CORETIMER_DelayUs(410);
+        
+        SPI1_WriteRead(&rdata, 1, &data, 35);
+        CORETIMER_DelayUs(615);
+        UART1_Write(&data, 35);
+        CORETIMER_DelayUs(615);
     }
 
     /* Execution should not come here during normal operation */
