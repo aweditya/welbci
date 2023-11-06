@@ -6,17 +6,18 @@ ser = serial.Serial('COM3', 115200)
 num_samples = 2000
 samples = []
 for _ in range(num_samples):
-    s = ser.read(35)
+    s = ser.read(46)
     s = [x for x in s]
     s = s[1:]
     data = []
-    for i in range(4):
+
+    for i in range(0, 4):
         x = (s[2 * i + 3] << 8) + s[2 * i + 4]
         if x & 0x8000:
             x = ~x & 0xFFFF
         data.append(x)
 
-    for i in range(11, 33):
+    for i in range(11, 44):
         s[i] = ((s[i] << 1) + (s[i + 1] >> 7)) & 0xFF
 
     for i in range(4, 8):
@@ -25,7 +26,7 @@ for _ in range(num_samples):
             x = ~x & 0xFFFF
         data.append(x)
     
-    for i in range(22, 33):
+    for i in range(22, 44):
         s[i] = ((s[i] << 1) + (s[i + 1] >> 7)) & 0xFF
 
     for i in range(8, 12):
@@ -34,8 +35,17 @@ for _ in range(num_samples):
             x = ~x & 0xFFFF
         data.append(x)
 
+    for i in range(33, 44):
+        s[i] = ((s[i] << 1) + (s[i + 1] >> 7)) & 0xFF
+
+    for i in range(12, 16):
+        x = (s[2 * i + 12] << 8) + s[2 * i + 13]
+        if x & 0x8000:
+            x = ~x & 0xFFFF
+        data.append(x)
+
     samples.append(data)
-    print(s)
+    # print(s)
 
 ch1 = [x[0] for x in samples]
 ch2 = [x[1] for x in samples]
@@ -49,6 +59,10 @@ ch9 = [x[8] for x in samples]
 ch10 = [x[9] for x in samples]
 ch11 = [x[10] for x in samples]
 ch12 = [x[11] for x in samples]
+ch13 = [x[12] for x in samples]
+ch14 = [x[13] for x in samples]
+ch15 = [x[14] for x in samples]
+ch16 = [x[15] for x in samples]
 
 fig, axs = plt.subplots(2, 2)
 axs[0, 0].plot(ch1)
@@ -101,6 +115,24 @@ axs[1, 0].set_title('Channel 11')
 
 axs[1, 1].plot(ch12)
 axs[1, 1].set_title('Channel 12')
+# axs[1, 1].set_ylim((-32768, 32767))
+plt.show()
+
+fig, axs = plt.subplots(2, 2)
+axs[0, 0].plot(ch13)
+axs[0, 0].set_title('Channel 13')
+# axs[0, 0].set_ylim((-32768, 32767))
+
+axs[0, 1].plot(ch14)
+axs[0, 1].set_title('Channel 14')
+# axs[0, 1].set_ylim((-32768, 32767))
+
+axs[1, 0].plot(ch15)
+axs[1, 0].set_title('Channel 15')
+# axs[1, 0].set_ylim((-32768, 32767))
+
+axs[1, 1].plot(ch16)
+axs[1, 1].set_title('Channel 16')
 # axs[1, 1].set_ylim((-32768, 32767))
 plt.show()
 
