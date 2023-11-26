@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 
 ser = serial.Serial('COM3', 115200)
 
-num_samples = 2000
+num_samples = 1000
 samples = []
 for _ in range(num_samples):
-    s = ser.read(46)
+    s = ser.read(68)
     s = [x for x in s]
     s = s[1:]
     data = []
@@ -17,7 +17,7 @@ for _ in range(num_samples):
             x = ~x & 0xFFFF
         data.append(x)
 
-    for i in range(11, 44):
+    for i in range(11, 66):
         s[i] = ((s[i] << 1) + (s[i + 1] >> 7)) & 0xFF
 
     for i in range(4, 8):
@@ -26,7 +26,7 @@ for _ in range(num_samples):
             x = ~x & 0xFFFF
         data.append(x)
     
-    for i in range(22, 44):
+    for i in range(22, 66):
         s[i] = ((s[i] << 1) + (s[i + 1] >> 7)) & 0xFF
 
     for i in range(8, 12):
@@ -35,7 +35,7 @@ for _ in range(num_samples):
             x = ~x & 0xFFFF
         data.append(x)
 
-    for i in range(33, 44):
+    for i in range(33, 66):
         s[i] = ((s[i] << 1) + (s[i + 1] >> 7)) & 0xFF
 
     for i in range(12, 16):
@@ -44,8 +44,26 @@ for _ in range(num_samples):
             x = ~x & 0xFFFF
         data.append(x)
 
+    for i in range(44, 66):
+        s[i] = ((s[i] << 1) + (s[i + 1] >> 7)) & 0xFF
+
+    for i in range(16, 20):
+        x = (s[2 * i + 15] << 8) + s[2 * i + 16]
+        if x & 0x8000:
+            x = ~x & 0xFFFF
+        data.append(x)
+
+    for i in range(55, 66):
+        s[i] = ((s[i] << 1) + (s[i + 1] >> 7)) & 0xFF
+
+    for i in range(20, 24):
+        x = (s[2 * i + 18] << 8) + s[2 * i + 19]
+        if x & 0x8000:
+            x = ~x & 0xFFFF
+        data.append(x)
+
     samples.append(data)
-    # print(s)
+    print(s)
 
 ch1 = [x[0] for x in samples]
 ch2 = [x[1] for x in samples]
@@ -63,6 +81,14 @@ ch13 = [x[12] for x in samples]
 ch14 = [x[13] for x in samples]
 ch15 = [x[14] for x in samples]
 ch16 = [x[15] for x in samples]
+ch17 = [x[16] for x in samples]
+ch18 = [x[17] for x in samples]
+ch19 = [x[18] for x in samples]
+ch20 = [x[19] for x in samples]
+ch21 = [x[20] for x in samples]
+ch22 = [x[21] for x in samples]
+ch23 = [x[22] for x in samples]
+ch24 = [x[23] for x in samples]
 
 fig, axs = plt.subplots(2, 2)
 axs[0, 0].plot(ch1)
@@ -133,6 +159,42 @@ axs[1, 0].set_title('Channel 15')
 
 axs[1, 1].plot(ch16)
 axs[1, 1].set_title('Channel 16')
+# axs[1, 1].set_ylim((-32768, 32767))
+plt.show()
+
+fig, axs = plt.subplots(2, 2)
+axs[0, 0].plot(ch17)
+axs[0, 0].set_title('Channel 17')
+# axs[0, 0].set_ylim((-32768, 32767))
+
+axs[0, 1].plot(ch18)
+axs[0, 1].set_title('Channel 18')
+# axs[0, 1].set_ylim((-32768, 32767))
+
+axs[1, 0].plot(ch19)
+axs[1, 0].set_title('Channel 19')
+# axs[1, 0].set_ylim((-32768, 32767))
+
+axs[1, 1].plot(ch20)
+axs[1, 1].set_title('Channel 20')
+# axs[1, 1].set_ylim((-32768, 32767))
+plt.show()
+
+fig, axs = plt.subplots(2, 2)
+axs[0, 0].plot(ch21)
+axs[0, 0].set_title('Channel 21')
+# axs[0, 0].set_ylim((-32768, 32767))
+
+axs[0, 1].plot(ch22)
+axs[0, 1].set_title('Channel 22')
+# axs[0, 1].set_ylim((-32768, 32767))
+
+axs[1, 0].plot(ch23)
+axs[1, 0].set_title('Channel 23')
+# axs[1, 0].set_ylim((-32768, 32767))
+
+axs[1, 1].plot(ch24)
+axs[1, 1].set_title('Channel 24')
 # axs[1, 1].set_ylim((-32768, 32767))
 plt.show()
 

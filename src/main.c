@@ -115,7 +115,8 @@ int main ( void )
 //    uint32_t data[11];
 //    uint32_t data[24];
 //    uint32_t data[35];
-    uint32_t data[46];
+//    uint32_t data[46];
+    uint32_t data[68];
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
@@ -139,10 +140,20 @@ int main ( void )
 //        UART1_Write(&data, 35);
 //        CORETIMER_DelayUs(615);
         
-        SPI1_WriteRead(&rdata, 1, &data, 46);
-        CORETIMER_DelayUs(820);
-        UART1_Write(&data, 46);
-        CORETIMER_DelayUs(820);        
+//        SPI1_WriteRead(&rdata, 1, &data, 46);
+//        CORETIMER_DelayUs(820);
+//        UART1_Write(&data, 46);
+//        CORETIMER_DelayUs(820);        
+        
+//        SPI1_WriteRead(&rdata, 1, &data, 68);
+//        CORETIMER_DelayUs(1230);
+//        UART1_Write(&data, 68);
+//        CORETIMER_DelayUs(1230);
+        
+        SPI1_WriteRead(&rdata, 1, &data, 68);
+        CORETIMER_DelayUs(500);
+        UART1_Write(&data, 68);
+        CORETIMER_DelayUs(500);        
     }
 
     /* Execution should not come here during normal operation */
