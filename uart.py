@@ -1,5 +1,7 @@
 import serial
 import matplotlib.pyplot as plt
+import csv
+from datetime import datetime
 
 ser = serial.Serial('COM3', 115200)
 
@@ -202,3 +204,24 @@ plt.show()
 #     s = ser.read(26)
 #     s = [x for x in s]
 #     print(s)
+
+combined_data = zip(ch1, ch2, ch3, ch4, 
+                    ch5, ch6, ch7, ch8,
+                    ch9, ch10, ch11, ch12, 
+                    ch13, ch14, ch15, ch16, 
+                    ch17, ch18, ch19, ch20, 
+                    ch21, ch22, ch23, ch24)
+
+# Generate a timestamp for the file name
+timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+csv_file_path = f'output_file_{timestamp}.csv'
+
+# Writing combined lists to a CSV file
+with open(csv_file_path, 'w', newline='') as csv_file:
+    csv_writer = csv.writer(csv_file)
+
+    # Writing each combined list (tuple) as a row in the CSV file
+    for line in combined_data:
+        csv_writer.writerow(line)
+
+print(f'The lists have been written to {csv_file_path}')
