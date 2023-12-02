@@ -45,11 +45,16 @@ int main ( void )
     CORETIMER_DelayUs(100);
     CORETIMER_DelayMs(100);
     
+//    char hello[32] = "hello\r\n";
+//    UART1_Write(hello, 32);
+    
     // Send SDATAC
     uint32_t sdatac = 0x11;
     SPI1_Write(&sdatac, 1);
     CORETIMER_DelayUs(100);
     CORETIMER_DelayMs(100);
+    
+//    UART1_Write(hello, 32);
     
     // Reading registers
 //    uint8_t rreg[2] = { 0x20, 0x00 };
@@ -72,14 +77,18 @@ int main ( void )
     SPI1_Write(config, 6);
     CORETIMER_DelayMs(5000);   
     
+//    UART1_Write(hello, 32);
+    
     // Update RLD_SENS, LOFF_SENS
     uint8_t drive[7] = { 0x4D, 0x04, 0x02, 0x02, 0x05, 0x02, 0x00 };
     SPI1_Write(drive, 7);
     CORETIMER_DelayMs(5000);
     
+//    UART1_Write(hello, 32);
+    
     // Update CHnSETn = 1,2,3,4
 //    uint8_t chnset[6] = { 0x45, 0x03, 0x05, 0x05, 0x05, 0x05 };
-//    uint8_t chnset[6] = { 0x45, 0x03, 0x00, 0x81, 0x81, 0x81 };
+//    uint8_t chnset[6] = { 0x45, 0x03, 0x00, 0x05, 0x05, 0x05 };
     uint8_t chnset[6] = { 0x45, 0x03, 0x00, 0x00, 0x00, 0x00 };
     SPI1_Write(chnset, 6);
     CORETIMER_DelayMs(10000);
@@ -99,6 +108,8 @@ int main ( void )
 //    
 //    UART1_Write(reg_val, 26);
 //    CORETIMER_DelayMs(5000);
+    
+//    UART1_Write(hello, 32);
     
     // Send START
     uint32_t start = 0x08;
@@ -124,7 +135,10 @@ int main ( void )
         SYS_Tasks ( );
         
         while ( PORTBbits.RB7 )
+        {
+            PORTBbits.RB11 = 1;
             CORETIMER_DelayUs(1);
+        }
                  
 //        SPI1_WriteRead(&rdata, 1, &data, 11);
 //        CORETIMER_DelayUs(205);
@@ -155,6 +169,9 @@ int main ( void )
         CORETIMER_DelayUs(500);
         UART1_Write(&data, 68);
         CORETIMER_DelayUs(500);        
+        
+//        PORTBbits.RB11 = ~PORTBbits.RB11;
+//        CORETIMER_DelayMs(1000);
     }
 
     /* Execution should not come here during normal operation */

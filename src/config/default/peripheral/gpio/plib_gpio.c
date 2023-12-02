@@ -62,6 +62,8 @@ void GPIO_Initialize ( void )
     ANSELACLR = 0x2; /* Digital Mode Enable */
 
     /* PORTB Initialization */
+    LATB = 0x0; /* Initial Latch Value */
+    TRISBCLR = 0x800; /* Direction Control */
     ANSELBCLR = 0x6000; /* Digital Mode Enable */
 
     /* PORTC Initialization */
